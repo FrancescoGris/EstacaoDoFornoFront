@@ -1,0 +1,54 @@
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-grupo label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #5E3023;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.campo-grupo input {
+  padding: 0.8rem 1rem;
+  border: 1.5px solid #d9c4b8;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #3a1f16;
+  background: #fdf9f6;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.campo-grupo input::placeholder {
+  color: #c0a89a;
+}
+
+.campo-grupo input:focus {
+  border-color: #5E3023;
+  box-shadow: 0 0 0 3px rgba(94, 48, 35, 0.08);
+  background: #fff;
+}
+
+.campo-grupo input:disabled {
+  background: #f0e8e0;
+  color: #9c7b6e;
+  cursor: not-allowed;
+}
+
+.campo-grupo.campo-erro input {
+  border-color: #b94040;
+}
+
+.campo-grupo.campo-erro input:focus {
+  box-shadow: 0 0 0 3px rgba(185, 64, 64, 0.1);
+}
+
+.erro-msg {
+  font-size: 0.78rem;
+  color: #b94040;
+  margin-top: 0.3rem;
+}

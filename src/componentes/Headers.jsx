@@ -8,8 +8,8 @@ function Header() {
     <header className="navbar">
       <div className="navbar-logo">
         <Link to="/">
-          <img src={logoImg} alt="Doce Mix Logo" />
-          <span>Doce Mix</span>
+          <img src={logoImg} alt="Estação Do Forno Logo" />
+          <span>Estação Do Forno</span>
         </Link>
       </div>
 

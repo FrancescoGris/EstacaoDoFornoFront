@@ -32,8 +32,8 @@ function Home() {
       {/* Mini banner de Bem-vindo */}
       <div className="hero-wrapper">
         <section className="hero-banner">
-          <h1>Bem-vindo à Doce Mix</h1>
-          <p>A doçura que faltava no seu dia está aqui.</p>
+          <h1>Bem-vindo à Estação Do Forno</h1>
+          <p>O sabor que faltava no seu dia está aqui.</p>
           <Link to="/produtos" className="cta-button">Ver Cardápio Completo</Link>
         </section>
       </div>

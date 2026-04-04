@@ -4,7 +4,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #d2b48c;
+  background-color: #F4A460;
   z-index: 100;
   padding-top: 80px;
 }
@@ -12,6 +12,7 @@
 .sidebar-titulo{
   font-size:20px;
   margin-bottom:20px;
+  color: #FFF8DC;
 }
 
 .sidebar-lista{
@@ -23,10 +24,12 @@
   cursor:pointer;
   transition:0.25s ease;
   position:relative;
+  color: #FFF8DC;
 }
 
 .sidebar-item:hover{
-  background-color:#F3E9DC;
+  background-color:#F7E9D0;
+  color: #D2691E;
 }
 
 .sidebar-item::after{
@@ -38,7 +41,7 @@
   width:70%;
   height:2px;
 
-  background:linear-gradient(to right,#C08552,#895737,#5E3023);
+  background:linear-gradient(to right,#D2691E,#CD853F,#8B4513);
 
   transform:scaleX(0);
   transform-origin:left;

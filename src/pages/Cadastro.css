@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F3E9DC;
+  background-color: #FFF8DC;
   padding: 3rem 2rem;
 }
 
@@ -27,12 +27,12 @@
 .cadastro-topo h1 {
   font-size: 1.9rem;
   font-weight: 600;
-  color: #4b2c20;
+  color: #D2691E;
   margin-bottom: 0.4rem;
 }
 
 .cadastro-topo p {
-  color: #9c7b6e;
+  color: #CD853F;
   font-size: 0.95rem;
 }
 
@@ -57,7 +57,7 @@
 .campo-grupo label {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #5E3023;
+  color: #8B4513;
   margin-bottom: 0.4rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -65,22 +65,22 @@
 
 .campo-grupo input {
   padding: 0.8rem 1rem;
-  border: 1.5px solid #d9c4b8;
+  border: 1.5px solid #F4A460;
   border-radius: 6px;
   font-size: 0.95rem;
-  color: #3a1f16;
-  background: #fdf9f6;
+  color: #8B4513;
+  background: #FFF8DC;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
 
 .campo-grupo input::placeholder {
-  color: #c0a89a;
+  color: #CD853F;
 }
 
 .campo-grupo input:focus {
-  border-color: #5E3023;
-  box-shadow: 0 0 0 3px rgba(94, 48, 35, 0.08);
+  border-color: #D2691E;
+  box-shadow: 0 0 0 3px rgba(210, 105, 30, 0.08);
   background: #fff;
 }
 

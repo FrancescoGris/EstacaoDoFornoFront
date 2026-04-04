@@ -6,7 +6,7 @@ import imgBrownie from '../ativos/brownie.png';
 import imgCookie from '../ativos/cookie.png';
 
 function Produtos() {
-  const listaDeDoces = [
+  const listaDeProdutos = [
     { 
       id: 1, 
       nome: "Bolo teste", 
@@ -37,14 +37,14 @@ function Produtos() {
     <div style={{ padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h2>Nossa Vitrine</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'center' , marginTop: '20px' }}>
-        {listaDeDoces.map((doce) => (
+        {listaDeProdutos.map((produto) => (
           <ProdutoCard 
-            key={doce.id} 
-            nomeProduto={doce.nome} 
-            precoProduto={doce.preco} 
-            descricao={doce.desc}
-            quantidadeDisponivel={doce.qtd}
-            foto={doce.imagem}
+            key={produto.id} 
+            nomeProduto={produto.nome} 
+            precoProduto={produto.preco} 
+            descricao={produto.desc}
+            quantidadeDisponivel={produto.qtd}
+            foto={produto.imagem}
           />
         ))}
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { criarUsuario } from '../services/usuarioService';
 import './Cadastro.css';
 
 function validarCPF(cpf) {
@@ -24,6 +25,10 @@ function validarEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function validarSenha(senha) {
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(senha);
+}
+
 function formatarCPF(valor) {
   return valor
     .replace(/\D/g, '')
@@ -45,7 +50,9 @@ export default function Cadastro() {
   });
 
   const [erros, setErros] = useState({});
+  const [erroApi, setErroApi] = useState('');
   const [enviado, setEnviado] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -56,8 +63,8 @@ export default function Cadastro() {
       setForm(prev => ({ ...prev, [name]: value }));
     }
 
-    // Limpa erro do campo ao digitar
     setErros(prev => ({ ...prev, [name]: '' }));
+    setErroApi('');
   }
 
   function validar() {
@@ -79,8 +86,8 @@ export default function Cadastro() {
 
     if (!form.senha) {
       novosErros.senha = 'Senha é obrigatória.';
-    } else if (form.senha.length < 6) {
-      novosErros.senha = 'A senha deve ter ao menos 6 caracteres.';
+    } else if (!validarSenha(form.senha)) {
+      novosErros.senha = 'A senha deve ter no mínimo 8 caracteres, letra maiúscula, minúscula, número e caractere especial (@$!%*?&).';
     }
 
     if (!form.confirmarSenha) {
@@ -92,7 +99,7 @@ export default function Cadastro() {
     return novosErros;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const novosErros = validar();
 
@@ -101,9 +108,21 @@ export default function Cadastro() {
       return;
     }
 
-    setEnviado(true);
-    // Aqui você conectaria com sua API/backend
-    setTimeout(() => navigate('/login'), 2000);
+    setCarregando(true);
+    try {
+      await criarUsuario({
+        nome: form.nome,
+        email: form.email,
+        senha: form.senha,
+        cpf: form.cpf.replace(/[^\d]/g, ''),
+      });
+      setEnviado(true);
+      setTimeout(() => navigate('/login'), 2000);
+    } catch (erro) {
+      setErroApi(erro.message || 'Erro ao realizar cadastro. Tente novamente.');
+    } finally {
+      setCarregando(false);
+    }
   }
 
   if (enviado) {
@@ -126,79 +145,40 @@ export default function Cadastro() {
 
         <form className="cadastro-form" onSubmit={handleSubmit} noValidate>
 
-          {/* Nome */}
           <div className={`campo-grupo ${erros.nome ? 'campo-erro' : ''}`}>
             <label htmlFor="nome">Nome completo</label>
-            <input
-              id="nome"
-              name="nome"
-              type="text"
-              placeholder="Seu nome"
-              value={form.nome}
-              onChange={handleChange}
-            />
+            <input id="nome" name="nome" type="text" placeholder="Seu nome" value={form.nome} onChange={handleChange} />
             {erros.nome && <span className="erro-msg">{erros.nome}</span>}
           </div>
 
-          {/* E-mail */}
           <div className={`campo-grupo ${erros.email ? 'campo-erro' : ''}`}>
             <label htmlFor="email">E-mail</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="seu@email.com"
-              value={form.email}
-              onChange={handleChange}
-            />
+            <input id="email" name="email" type="email" placeholder="seu@email.com" value={form.email} onChange={handleChange} />
             {erros.email && <span className="erro-msg">{erros.email}</span>}
           </div>
 
-          {/* CPF */}
           <div className={`campo-grupo ${erros.cpf ? 'campo-erro' : ''}`}>
             <label htmlFor="cpf">CPF</label>
-            <input
-              id="cpf"
-              name="cpf"
-              type="text"
-              placeholder="000.000.000-00"
-              value={form.cpf}
-              onChange={handleChange}
-              inputMode="numeric"
-            />
+            <input id="cpf" name="cpf" type="text" placeholder="000.000.000-00" value={form.cpf} onChange={handleChange} inputMode="numeric" />
             {erros.cpf && <span className="erro-msg">{erros.cpf}</span>}
           </div>
 
-          {/* Senha */}
           <div className={`campo-grupo ${erros.senha ? 'campo-erro' : ''}`}>
             <label htmlFor="senha">Senha</label>
-            <input
-              id="senha"
-              name="senha"
-              type="password"
-              placeholder="Mínimo 6 caracteres"
-              value={form.senha}
-              onChange={handleChange}
-            />
+            <input id="senha" name="senha" type="password" placeholder="Mínimo 8 caracteres" value={form.senha} onChange={handleChange} />
             {erros.senha && <span className="erro-msg">{erros.senha}</span>}
           </div>
 
-          {/* Confirmar senha */}
           <div className={`campo-grupo ${erros.confirmarSenha ? 'campo-erro' : ''}`}>
             <label htmlFor="confirmarSenha">Confirmar senha</label>
-            <input
-              id="confirmarSenha"
-              name="confirmarSenha"
-              type="password"
-              placeholder="Repita a senha"
-              value={form.confirmarSenha}
-              onChange={handleChange}
-            />
+            <input id="confirmarSenha" name="confirmarSenha" type="password" placeholder="Repita a senha" value={form.confirmarSenha} onChange={handleChange} />
             {erros.confirmarSenha && <span className="erro-msg">{erros.confirmarSenha}</span>}
           </div>
 
-          <button type="submit" className="btn-cadastrar">
-            Criar conta
+          {erroApi && <p className="cadastro-erro-api">{erroApi}</p>}
+
+          <button type="submit" className="btn-cadastrar" disabled={carregando}>
+            {carregando ? 'Cadastrando...' : 'Criar conta'}
           </button>
         </form>
 

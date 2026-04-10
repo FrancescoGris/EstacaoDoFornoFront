@@ -1,9 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logoImg from '../ativos/logotransparente.png';
+import { useAuth } from '../contexts/AuthContext';
 import './Headers.css';
 
 function Header() {
+  const { estaLogado, usuario, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate('/login');
+  }
+
   return (
     <header className="navbar">
       <div className="navbar-logo">
@@ -16,8 +25,18 @@ function Header() {
       <nav className="navbar-links">
         <Link to="/">Home</Link>
         <Link to="/produtos">Produtos</Link>
-        <Link to="/login" className="login-btn">Login</Link>
-        <Link to="/carrinho" className="carrinho">🛒</Link>
+
+        {estaLogado ? (
+          <>
+            <Link to="/perfil" className="login-btn">{usuario?.nome}</Link>
+            <button className="logout-btn" onClick={handleLogout}>Sair</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="login-btn">Login</Link>
+            <Link to="/cadastro">Cadastro</Link>
+          </>
+        )}
       </nav>
     </header>
   );

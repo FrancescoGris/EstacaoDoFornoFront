@@ -1,33 +1,65 @@
-import Sidebar from "./componentes/Sidebar";
-import Header from "./componentes/Headers";
-import Footer from "./componentes/Footer";
-import Home from "./pages/Home";
-import Produtos from "./pages/Produtos";
-import Cadastro from './pages/Cadastro';
-import Sobre from './pages/Sobre';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-function App(){
-  return(
-  <>
-    <Header /> {/* Ocupa o topo */}
-    
-    <div className="layout-principal">
-      <Sidebar /> {/* Coluna esquerda */}
-      
-      <main className="conteudo-da-pagina"> {/* Coluna direita */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/produtos" element={<Produtos />} />
-          <Route path="/cadastro" element={<Cadastro />} />
-          <Route path="/sobre" element={<Sobre />} />
-        </Routes>
-      </main>
-    </div>
+import { AuthProvider } from './contexts/AuthContext';
+import RotaProtegida from './componentes/RotaProtegida/RotaProtegida';
 
-    <Footer /> {/* Footer no final da página */}
-  </>
-  )
+import Header from './componentes/Headers';
+import Sidebar from './componentes/Sidebar';
+import Footer from './componentes/Footer';
+
+import Home from './pages/Home';
+import Login from './pages/Login/Login';
+import Cadastro from './pages/Cadastro';
+import Sobre from './pages/Sobre';
+import Perfil from './pages/Perfil/Perfil';
+
+import Produtos from './pages/Produtos/Produtos';
+import ProdutoForm from './pages/Produtos/ProdutoForm';
+
+import Categorias from './pages/Categorias/Categorias';
+import CategoriaForm from './pages/Categorias/CategoriaForm';
+
+import Administradores from './pages/Administradores/Administradores';
+import AdministradorForm from './pages/Administradores/AdministradorForm';
+
+function App() {
+  return (
+    <AuthProvider>
+      <Header />
+
+      <div className="layout-principal">
+        <Sidebar />
+
+        <main className="conteudo-da-pagina">
+          <Routes>
+            {/* Rotas públicas */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cadastro" element={<Cadastro />} />
+            <Route path="/sobre" element={<Sobre />} />
+
+            {/* Rotas protegidas */}
+            <Route path="/perfil" element={<RotaProtegida><Perfil /></RotaProtegida>} />
+
+            <Route path="/produtos" element={<RotaProtegida><Produtos /></RotaProtegida>} />
+            <Route path="/produtos/novo" element={<RotaProtegida><ProdutoForm /></RotaProtegida>} />
+            <Route path="/produtos/editar/:id" element={<RotaProtegida><ProdutoForm /></RotaProtegida>} />
+
+            <Route path="/categorias" element={<RotaProtegida><Categorias /></RotaProtegida>} />
+            <Route path="/categorias/nova" element={<RotaProtegida><CategoriaForm /></RotaProtegida>} />
+            <Route path="/categorias/editar/:id" element={<RotaProtegida><CategoriaForm /></RotaProtegida>} />
+
+            <Route path="/administradores" element={<RotaProtegida><Administradores /></RotaProtegida>} />
+            <Route path="/administradores/novo" element={<RotaProtegida><AdministradorForm /></RotaProtegida>} />
+            <Route path="/administradores/editar/:id" element={<RotaProtegida><AdministradorForm /></RotaProtegida>} />
+          </Routes>
+        </main>
+      </div>
+
+      <Footer />
+    </AuthProvider>
+  );
 }
 
 export default App;

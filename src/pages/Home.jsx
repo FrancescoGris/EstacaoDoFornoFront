@@ -1,55 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { listarProdutos } from '../services/produtoService';
 import ProdutoCard from '../componentes/ProdutosCard';
-import imgBolo from '../ativos/bolodestaque.png';
-import imgCookie from '../ativos/cookiedestaque.png';
-
-// pro CSS funcionar:
-import '../App.css'; 
+import '../App.css';
 
 function Home() {
-  const produtosDestaque = [
-    { 
-      id: 1, 
-      nome: "Bolo teste3", 
-      preco: 45.00, 
-      desc: "O campeão de gosto bom",
-      qtd: 5,
-      foto: imgBolo 
-    },
-    { 
-      id: 3, 
-      nome: "Cookie teste3", 
-      preco: 8.00, 
-      desc: "testando edição limitada.",
-      qtd: 12,
-      foto: imgCookie 
-    }
-  ];
+  const [destaques, setDestaques] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState('');
+
+  useEffect(() => {
+    listarProdutos(1, 10)
+      .then(resposta => {
+        const produtosDestaque = resposta.dados.filter(p => p.destaque && p.ativo);
+        setDestaques(produtosDestaque);
+      })
+      .catch(err => setErro(err.message))
+      .finally(() => setCarregando(false));
+  }, []);
 
   return (
     <div className="home-container">
-      {/* Mini banner de Bem-vindo */}
       <div className="hero-wrapper">
         <section className="hero-banner">
-          <h1>Bem-vindo à Estação Do Forno</h1>
-          <p>O sabor que faltava no seu dia está aqui.</p>
+          <h1>Bem-vindo à Estação do Forno</h1>
+          <p>A doçura que faltava no seu dia está aqui.</p>
           <Link to="/produtos" className="cta-button">Ver Cardápio Completo</Link>
         </section>
       </div>
 
-      {/* Seção de Destaques */}
       <section className="destaques">
         <h2>✨ Produtos em Destaque ✨</h2>
+
+        {carregando && <p style={{ color: '#9c7b6e' }}>Carregando...</p>}
+        {erro && <p style={{ color: '#b94040' }}>{erro}</p>}
+
+        {!carregando && !erro && destaques.length === 0 && (
+          <p style={{ color: '#9c7b6e' }}>Nenhum produto em destaque no momento.</p>
+        )}
+
         <div className="destaques-grid">
-          {produtosDestaque.map((doce) => (
-            <ProdutoCard 
-              key={doce.id} 
-              nomeProduto={doce.nome} 
-              precoProduto={doce.preco} 
-              descricao={doce.desc}
-              quantidadeDisponivel={doce.qtd}
-              foto={doce.foto}
+          {destaques.map(produto => (
+            <ProdutoCard
+              key={produto.id}
+              nomeProduto={produto.nome}
+              precoProduto={produto.preco}
+              descricao={produto.descricao}
+              quantidadeDisponivel={produto.ativo ? 'Disponível' : 'Indisponível'}
+              foto={produto.imagem || null}
             />
           ))}
         </div>

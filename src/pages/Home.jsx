@@ -12,10 +12,12 @@ function Home() {
   useEffect(() => {
     listarProdutos(1, 10)
       .then(resposta => {
-        const produtosDestaque = resposta.dados.filter(p => p.destaque && p.ativo);
+        // Verifica se resposta.dados existe (caso de sucesso do backend)
+        const lista = resposta.dados || (Array.isArray(resposta) ? resposta : []);
+        const produtosDestaque = lista.filter(p => p.destaque && p.ativo);
         setDestaques(produtosDestaque);
       })
-      .catch(err => setErro(err.message))
+      .catch(err => setErro("Não foi possível carregar os produtos."))
       .finally(() => setCarregando(false));
   }, []);
 

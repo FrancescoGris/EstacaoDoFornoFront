@@ -14,21 +14,8 @@ function validarEmail(email: string): boolean {
 }
 
 function validarCPF(cpf: string): boolean {
-  const cpfLimpo = cpf.replace(/[.-]/g, '')
-  if (cpfLimpo.length !== 11) return false
-  if (/^(\d)\1+$/.test(cpfLimpo)) return false
-
-  let soma = 0
-  for (let i = 0; i < 9; i++) soma += Number(cpfLimpo[i]) * (10 - i)
-  let d1 = (soma * 10) % 11
-  if (d1 === 10 || d1 === 11) d1 = 0
-  if (d1 !== Number(cpfLimpo[9])) return false
-
-  soma = 0
-  for (let i = 0; i < 10; i++) soma += Number(cpfLimpo[i]) * (11 - i)
-  let d2 = (soma * 10) % 11
-  if (d2 === 10 || d2 === 11) d2 = 0
-  return d2 === Number(cpfLimpo[10])
+  const cpfLimpo = cpf.replace(/[.\-]/g, '')
+  return cpfLimpo.length === 11 && !/^(\d)\1+$/.test(cpfLimpo)
 }
 
 function validarSenha(senha: string): boolean {

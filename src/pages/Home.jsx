@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { listarProdutos } from '../services/produtoService';
 import ProdutoCard from '../componentes/ProdutosCard';
+import ModalProduto from '../componentes/ModalProduto/ModalProduto';
 import '../App.css';
 
 function Home() {
   const [destaques, setDestaques] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
 
   useEffect(() => {
     listarProdutos(1, 10)
       .then(resposta => {
-        // Verifica se resposta.dados existe (caso de sucesso do backend)
         const lista = resposta.dados || (Array.isArray(resposta) ? resposta : []);
         const produtosDestaque = lista.filter(p => p.destaque && p.ativo);
         setDestaques(produtosDestaque);
       })
-      .catch(err => setErro("Não foi possível carregar os produtos."))
+      .catch(() => setErro("Não foi possível carregar os produtos."))
       .finally(() => setCarregando(false));
   }, []);
 
@@ -26,12 +27,13 @@ function Home() {
       <div className="hero-wrapper">
         <section className="hero-banner">
           <h1>Bem-vindo à Estação do Forno</h1>
-          <p>O salgado que tempera o seu dia está aqui.</p>
+          <p>A doçura que faltava no seu dia está aqui.</p>
+          <Link to="/produtos" className="cta-button">Ver Cardápio Completo</Link>
         </section>
       </div>
 
       <section className="destaques">
-        <h2>Veja Nossos Produtos:</h2>
+        <h2>✨ Produtos em Destaque ✨</h2>
 
         {carregando && <p style={{ color: '#9c7b6e' }}>Carregando...</p>}
         {erro && <p style={{ color: '#b94040' }}>{erro}</p>}
@@ -49,10 +51,23 @@ function Home() {
               descricao={produto.descricao}
               quantidadeDisponivel={produto.ativo ? 'Disponível' : 'Indisponível'}
               foto={produto.imagem || null}
+              onVerMais={() => setProdutoSelecionado({
+                nomeProduto: produto.nome,
+                precoProduto: produto.preco,
+                descricao: produto.descricao,
+                foto: produto.imagem || null,
+              })}
             />
           ))}
         </div>
       </section>
+
+      {produtoSelecionado && (
+        <ModalProduto
+          produto={produtoSelecionado}
+          onFechar={() => setProdutoSelecionado(null)}
+        />
+      )}
     </div>
   );
 }

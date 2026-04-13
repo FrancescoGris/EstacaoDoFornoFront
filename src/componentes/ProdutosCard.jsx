@@ -14,7 +14,7 @@ function ProdutoCard(props) {
         <p className="preco">R$ {props.precoProduto.toFixed(2)}</p>
         <p className="descricao">{props.descricao}</p>
         <p className="estoque"><small>Estoque: {props.quantidadeDisponivel}</small></p>
-        <button className="card-button">Ver mais</button>
+        <button className="card-button" onClick={props.onVerMais}>Ver mais</button>
       </div>
     </div>
   );

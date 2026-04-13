@@ -35,7 +35,7 @@ function Sobre() {
         <div className="equipe-grid">
           <div className="equipe-membro">
             <h3>Ronald</h3>
-            <p>Desenvolvedor Front-end responsável pelo site e experiência digital.</p>
+            <p>Desenvolvedor Full-Stack.</p>
             <div className="membro-links">
               <a href="https://github.com/Afton06" target="_blank" rel="noopener noreferrer">🐱 GitHub</a>
               <a href="https://www.instagram.com/pvrnk_r/" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
@@ -43,7 +43,7 @@ function Sobre() {
           </div>
           <div className="equipe-membro">
             <h3>Francesco</h3>
-            <p>UI/UX Designer que cria interfaces intuitivas e bonitas.</p>
+            <p>Desenvolvedor Focado em Backend.</p>
             <div className="membro-links">
               <a href="https://github.com/FrancescoGris" target="_blank" rel="noopener noreferrer">🐱 GitHub</a>
               <a href="https://www.instagram.com/fran_grisf/" target="_blank" rel="noopener noreferrer">📷 Instagram</a>

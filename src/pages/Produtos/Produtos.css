@@ -13,7 +13,7 @@
 .produtos-topo h1 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #4b2c20;
+  color: #D2691E;
 }
 
 .produtos-erro {
@@ -41,7 +41,7 @@
 }
 
 .produtos-tabela th {
-  background-color: #4b2c20;
+  background-color: #D2691E;
   color: #F3E9DC;
   padding: 0.9rem 1.2rem;
   text-align: left;

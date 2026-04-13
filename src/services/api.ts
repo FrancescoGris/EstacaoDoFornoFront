@@ -21,6 +21,11 @@ async function requisicao<T>(
     return undefined as T
   }
 
+  const contentType = resposta.headers.get('Content-Type') || ''
+  if (!contentType.includes('application/json')) {
+    throw new Error(`Erro: Desculpe, ocorreu um erro inesperado.`)
+  }
+
   const dados = await resposta.json()
 
   if (!resposta.ok) {

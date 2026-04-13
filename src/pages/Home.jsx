@@ -26,13 +26,12 @@ function Home() {
       <div className="hero-wrapper">
         <section className="hero-banner">
           <h1>Bem-vindo à Estação do Forno</h1>
-          <p>A doçura que faltava no seu dia está aqui.</p>
-          <Link to="/produtos" className="cta-button">Ver Cardápio Completo</Link>
+          <p>O salgado que tempera o seu dia está aqui.</p>
         </section>
       </div>
 
       <section className="destaques">
-        <h2>✨ Produtos em Destaque ✨</h2>
+        <h2>Veja Nossos Produtos:</h2>
 
         {carregando && <p style={{ color: '#9c7b6e' }}>Carregando...</p>}
         {erro && <p style={{ color: '#b94040' }}>{erro}</p>}

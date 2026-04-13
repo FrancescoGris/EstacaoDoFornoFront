@@ -27,7 +27,9 @@ export default function Produtos() {
       setTotalPaginas(resposta.totalPaginas)
       setPaginaAtual(pagina)
     } catch (erro: unknown) {
-      if (erro instanceof Error) setErroApi(erro.message)
+      if (erro instanceof Error) {
+        setErroApi(erro.message)
+      }
     } finally {
       setCarregando(false)
     }
@@ -35,6 +37,7 @@ export default function Produtos() {
 
   useEffect(() => {
     carregar(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function abrirModal(id: string) {
@@ -49,13 +52,16 @@ export default function Produtos() {
 
   async function confirmarDelecao() {
     if (!idParaDeletar) return
+    fecharModal()
     try {
       await deletarProduto(idParaDeletar)
-      fecharModal()
+      setIdParaDeletar(null)
       carregar(paginaAtual)
     } catch (erro: unknown) {
-      if (erro instanceof Error) setErroApi(erro.message)
-      fecharModal()
+      if (erro instanceof Error) {
+        setErroApi(erro.message)
+      }
+      setIdParaDeletar(null)
     }
   }
 

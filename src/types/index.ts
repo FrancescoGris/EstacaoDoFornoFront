@@ -15,6 +15,7 @@ export interface UsuarioLogado {
   id: string
   nome: string
   email: string
+  isAdmin: boolean
 }
 
 // ==================== Paginação ====================

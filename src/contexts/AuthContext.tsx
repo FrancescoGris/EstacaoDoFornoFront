@@ -5,6 +5,7 @@ interface AuthContextData {
   usuario: UsuarioLogado | null
   token: string | null
   estaLogado: boolean
+  isAdmin: boolean
   salvarLogin: (token: string, usuario: UsuarioLogado) => void
   logout: () => void
 }
@@ -39,12 +40,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUsuario(null)
   }
 
+  const isAdmin = usuario?.isAdmin === true
+
   return (
     <AuthContext.Provider
       value={{
         usuario,
         token,
         estaLogado: !!token,
+        isAdmin,
         salvarLogin,
         logout,
       }}

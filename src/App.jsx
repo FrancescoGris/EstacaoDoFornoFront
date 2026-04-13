@@ -20,9 +20,6 @@ import ProdutoForm from './pages/Produtos/ProdutoForm';
 import Categorias from './pages/Categorias/Categorias';
 import CategoriaForm from './pages/Categorias/CategoriaForm';
 
-import Administradores from './pages/Administradores/Administradores';
-import AdministradorForm from './pages/Administradores/AdministradorForm';
-
 function App() {
   return (
     <AuthProvider>
@@ -50,9 +47,6 @@ function App() {
             <Route path="/categorias/nova" element={<RotaProtegida><CategoriaForm /></RotaProtegida>} />
             <Route path="/categorias/editar/:id" element={<RotaProtegida><CategoriaForm /></RotaProtegida>} />
 
-            <Route path="/administradores" element={<RotaProtegida><Administradores /></RotaProtegida>} />
-            <Route path="/administradores/novo" element={<RotaProtegida><AdministradorForm /></RotaProtegida>} />
-            <Route path="/administradores/editar/:id" element={<RotaProtegida><AdministradorForm /></RotaProtegida>} />
           </Routes>
         </main>
       </div>

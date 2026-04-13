@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import './Headers.css';
 
 function Header() {
-  const { estaLogado, usuario, logout } = useAuth();
+  const { estaLogado, usuario, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -24,7 +24,8 @@ function Header() {
 
       <nav className="navbar-links">
         <Link to="/">Home</Link>
-        <Link to="/produtos">Produtos</Link>
+        {isAdmin && <Link to="/produtos">Cadastro de Produtos</Link>}
+
 
         {estaLogado ? (
           <>
